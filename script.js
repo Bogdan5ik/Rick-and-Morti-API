@@ -6,12 +6,21 @@ fetch('https://rickandmortyapi.com/graphql', {
   body: JSON.stringify({
     query: `
       {
-        characters(page: 4) {
+        characters(page: 3) {
           info {
             count
           }
           results {
+            location {
             name
+            type
+            dimension
+          }
+            name
+
+            episode {
+          name
+          }
             image
             status
           }
@@ -22,10 +31,12 @@ fetch('https://rickandmortyapi.com/graphql', {
 })
 .then(res => res.json())
 .then(data => {
-  const images = document.querySelectorAll('img');
+  const images = document.querySelectorAll('.img');
+  const locat = document.querySelectorAll('.location')
   const nameElements = document.querySelectorAll('.names');
   const characters = data.data.characters.results;
   const status = document.querySelectorAll('.live');
+  const last = document.querySelectorAll('.last')
 
   images.forEach((img, index) => {
     if (characters[index]) {
@@ -43,6 +54,18 @@ fetch('https://rickandmortyapi.com/graphql', {
   status.forEach((le, index) => {
     if (status[index]) {
       le.innerHTML = characters[index].status;
+    }
+  })
+
+  locat.forEach((ws, index) => {
+    if (locat[index]) {
+      ws.innerHTML = characters[index].location.name;
+    }
+  })
+
+  last.forEach((we, index) => {
+    if (last[index]) {
+      we.innerHTML = characters[index].episode.slice(-1)[0].name;
     }
   })
 });
